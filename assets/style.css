@@ -2,12 +2,14 @@ html,
 body {
     margin: 0;
     padding: 0;
+    user-select: none;
+    font-family: 'Roboto', sans-serif;
 }
 
 .timeline-wrapper {
     display: flex;
     flex-direction: row;
-    height: 100%;
+    padding: 50px 5px;
 }
 
 .timeline-wrapper .card-list {
@@ -19,6 +21,7 @@ body {
 
 .card-list .card {
     width: 100%;
+    cursor: grab;
 }
 
 .timeline-wrapper .timeline {
@@ -26,11 +29,18 @@ body {
     display: flex;
     flex-direction: row;
     position: relative;
-    margin-left: 4%;
+    margin-left: 3.5%;
 }
 
 .timeline-wrapper .day-column {
     flex-grow: 1;
+    flex-basis: 0;
+    position: relative;
+    border-right: 1px solid #66666626;
+}
+
+.timeline-wrapper .day-column:last-child {
+    border-right: none;
 }
 
 .timeline-wrapper .front-overlay {
@@ -43,15 +53,11 @@ body {
 }
 
 .timeline-wrapper .markers-placeholder {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+    position: relative;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    margin-left: -4%;
-    overflow-y: scroll;
 }
 
 .timeline-wrapper .markers-placeholder .hour-marker {
@@ -59,17 +65,44 @@ body {
     flex-direction: row;
     align-items: center;
     overflow-x: visible;
+    padding-bottom: 45px;
+    height: 0;
+    background-color: rgb(204, 167, 167, 0.15);
+}
+
+.timeline-wrapper .markers-placeholder .hour-marker:nth-child(2n+1) {
+    background-color: rgb(224, 171, 171, 0.15);
 }
 
 .markers-placeholder .hour-marker .hour {
-    padding: 15px 5px;
     flex-grow: 0.1;
+    padding: 5px;
+    background-color: #0000000a;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+    margin-left: -71px;
+    font-size: 1.1rem;
+    text-align: center;
 }
 
 .markers-placeholder .hour-marker hr {
     flex-grow: 12;
+    border-color: #fff;
 }
 
 .card-list .card {
     padding: 5px 10px;
+}
+
+.day-column .day-header {
+    margin-top: -35px;
+    font-weight: 700;
+    font-size: 1.3rem;
+    padding-left: 5px;
+}
+
+.day-column .card {
+    background-color: #ff0000;
+    position: absolute;
+    left: 1px;
+    right: 1px;
 }
