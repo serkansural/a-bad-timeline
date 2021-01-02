@@ -4,13 +4,72 @@ body {
     padding: 0;
 }
 
-.timeline-wrapper {}
-
-.card-list {
+.timeline-wrapper {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    flex-direction: row;
+    height: 100%;
 }
 
-.card-list .card {}
+.timeline-wrapper .card-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 0.5;
+}
+
+.card-list .card {
+    width: 100%;
+}
+
+.timeline-wrapper .timeline {
+    flex-grow: 5;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    margin-left: 4%;
+}
+
+.timeline-wrapper .day-column {
+    flex-grow: 1;
+}
+
+.timeline-wrapper .front-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+}
+
+.timeline-wrapper .markers-placeholder {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    margin-left: -4%;
+    overflow-y: scroll;
+}
+
+.timeline-wrapper .markers-placeholder .hour-marker {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    overflow-x: visible;
+}
+
+.markers-placeholder .hour-marker .hour {
+    padding: 15px 5px;
+    flex-grow: 0.1;
+}
+
+.markers-placeholder .hour-marker hr {
+    flex-grow: 12;
+}
+
+.card-list .card {
+    padding: 5px 10px;
+}
