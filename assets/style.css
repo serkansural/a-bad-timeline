@@ -93,12 +93,14 @@ body {
     padding: 5px 15px;
 }
 
-.card-list .card .resize {
+.card-list .card .resize,
+.card-list .card .remove,
+.card-list .card .info {
     display: none;
 }
 
 .day-column .card .resize {
-    border-bottom: 3px dashed red;
+    border-bottom: 5px dashed red;
     padding-top: 10px;
     position: absolute;
     left: 0;
@@ -130,8 +132,23 @@ body {
     padding: 5px;
 }
 
-.card .title {
+.day-column .card .remove {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: inline-block;
+    color: #fff;
+    text-shadow: 0 0 2px #ff0000;
+    font-size: 1.1rem;
+}
+
+.card .title,
+.day-column .card .info {
     pointer-events: none;
+}
+
+.day-column .card .info {
+    padding: 5px;
 }
 
 .card.active {
