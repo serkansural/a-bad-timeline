@@ -19,50 +19,68 @@ for (let i = 0; i < 24; ++i) {
 
 
 const pointerState = {
+    internal: false,
     card: null,
     dayColumn: null,
     hourMarker: null,
     hour: null,
     minute: null,
+    offsetY: 0,
+    isHeld: false,
 };
 
 document.addEventListener('pointerdown', function(event) {
-    Object.keys(pointerState).forEach(function(e, i) {
-        pointerState[e] = null; //clear old state
-    });
-    if (event.target.classList.contains('card') && event.target.parentNode !== null && event.target.parentNode.classList.contains('card-list')) {
-        pointerState.card = event.target.cloneNode(true);
+    pointerState.isHeld = true;
+    if (event.target.classList.contains('card')) {
+        if (event.target.parentNode !== null && event.target.parentNode.classList.contains('card-list')) {
+            pointerState.card = event.target.cloneNode(true);
+        } else {
+            pointerState.card = event.target;
+            pointerState.internal = true;
+            const rect = event.target.getBoundingClientRect();
+            pointerState.offsetY = event.clientY - rect.top;
+        }
     }
 });
 
 document.addEventListener('pointerup', function(event) {
-    let cancelAction = false;
-    Object.values(pointerState).forEach(function(e, i) {
-        if (e === null) cancelAction = true;
-    });
-    if (cancelAction) return;
-    pointerState.card.dataset.hour = pointerState.hour;
-    pointerState.card.dataset.minute = pointerState.minute;
+    pointerState.isHeld = false;
+    if (pointerState.card === null || pointerState.dayColumn === null) {
+        return;
+    }
     handleCardTransform(pointerState.card);
     pointerState.dayColumn.appendChild(pointerState.card);
+    Object.keys(pointerState).forEach(function(e, i) {
+        pointerState[e] = null; //clear old state
+    });
 });
 
 document.addEventListener('pointermove', function(event) {
-
-    const data = calculateTimeFromPoint(event.clientX, event.clientY);
+    if (pointerState.card === null || !pointerState.isHeld) {
+        return;
+    }
+    const data = calculateTimeFromPoint(event.clientX, event.clientY - pointerState.offsetY);
     if (data === null) return;
+    if (pointerState.internal === true) {
+        handleCardTransform(pointerState.card);
+    }
     Object.assign(pointerState, data);
 });
 
 function handleCardTransform(card) {
+    pointerState.card.dataset.hour = pointerState.hour;
+    pointerState.card.dataset.minute = pointerState.minute;
+    const length = parseFloat(card.dataset.timeLength);
     const hour = card.dataset.hour;
     const minute = card.dataset.minute;
     const top = (parseInt(hour) * 60 + parseInt(minute)) / (24 * 60) * 100;
     card.style.top = `${top}%`;
+    card.style.height = `${length / 24 * 100}%`;
 }
 
 function calculateTimeFromPoint(x, y) {
-    const elements = document.elementsFromPoint(event.clientX, event.clientY);
+    console.log(pointerState.offsetY);
+    const elements = document.elementsFromPoint(x, y);
     let dayColumn = null;
     let hourMarker = null;
     elements.forEach(function(e, i) {
@@ -78,7 +96,7 @@ function calculateTimeFromPoint(x, y) {
     }
 
     const rect = hourMarker.getBoundingClientRect();
-    const yRat = (event.clientY - rect.y) / rect.height;
+    const yRat = (y - rect.y) / rect.height;
     let hour = parseInt(hourMarker.dataset.hour);
     let minute = ~~(yRat * 60);
     return {

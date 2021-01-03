@@ -105,4 +105,5 @@ body {
     position: absolute;
     left: 1px;
     right: 1px;
+    cursor: grab;
 }
