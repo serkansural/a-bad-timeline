@@ -16,7 +16,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex-grow: 0.5;
+    flex-grow: 0.3;
 }
 
 .card-list .card {
@@ -90,7 +90,21 @@ body {
 }
 
 .card-list .card {
-    padding: 5px 10px;
+    padding: 5px 15px;
+}
+
+.card-list .card .resize {
+    display: none;
+}
+
+.day-column .card .resize {
+    border-bottom: 3px dashed red;
+    padding-top: 10px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: s-resize;
 }
 
 .day-column .day-header {
@@ -101,9 +115,26 @@ body {
 }
 
 .day-column .card {
-    background-color: #ff0000;
+    color: #fff;
+    background-color: #534d4d;
     position: absolute;
     left: 1px;
     right: 1px;
     cursor: grab;
+}
+
+.day-column .card .title {
+    background-color: #3b3939;
+    color: #fff;
+    font-size: 1.1em;
+    padding: 5px;
+}
+
+.card .title {
+    pointer-events: none;
+}
+
+.card.active {
+    background: rgb(85, 76, 76);
+    background: radial-gradient(circle, rgba(85, 76, 76, 1) 6%, rgba(82, 72, 72, 1) 34%, rgba(83, 77, 77, 1) 75%, rgba(96, 103, 103, 1) 96%);
 }
